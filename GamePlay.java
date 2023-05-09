@@ -1,28 +1,35 @@
 import java.util.Scanner;
 public class GamePlay
 {
-    private static Person person = new Person("","");
+    private static final Hosts host = new Hosts();
+    private static final Players player = new Players();
     public static void main(String[] args)
     {
-
+        // Create scanner and get user input
         Scanner name = new Scanner(System.in);
-        System.out.println("Enter first name");
-        person.setFirstName(name.nextLine());
-        System.out.println("Enter last name? To skip press Enter");
-        person.setLastName(name.nextLine());
 
-        Numbers newNum = new Numbers();
-        newNum.generateNumber();
-        int guess;
-        System.out.println(person.getFirstName() + " " + person.getLastName() +
-                ", guess what number I picked between 0 and 100.");
-        guess = Integer.parseInt(name.nextLine());
+        // Host
+        System.out.println("Enter first name for Host");
+        host.setFirstName(name.nextLine());
+        System.out.println("Enter last name for Host? To skip press Enter");
+        host.setLastName(name.nextLine());
 
-        while (!newNum.compareNumber(guess))
-        {
-            System.out.println(person.getFirstName() + " " + person.getLastName() +
-                    ", guess what number I picked between 0 and 100.");
-            guess = Integer.parseInt(name.nextLine());
+        // Player
+        System.out.println("Enter first name for Player");
+        player.setFirstName(name.nextLine());
+        System.out.println("Enter last name for Player? To skip press Enter");
+        player.setLastName(name.nextLine());
+
+        // Generate a number for the gameplay
+        host.randomizeNum();
+
+        // Play game
+        Turn turn = new Turn();
+        turn.takeTurn(player,host);
+
+        // Replay game
+        if (turn.takeTurn(player, host)) {
+            turn.takeTurn(player,host);
         }
     }
 }

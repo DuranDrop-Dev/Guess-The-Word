@@ -1,27 +1,37 @@
 public class Person
 {
-    private String firstName;
-    private String lastName;
-    public Person(String firstName)
-    {
-        this.firstName = firstName;
-        this.lastName = "";
+    private static String firstName;
+    private static String lastName;
+    public Person() {
+        firstName = "";
+        lastName = "";
     }
-    public Person(String firstName, String lastName)
-    {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Person(String firstName) {
+        Person.firstName = firstName;
+        Person.lastName = "";
+    }
+    public Person(String firstName, String lastName) {
+        Person.firstName = firstName;
+        Person.lastName = lastName;
     }
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        Person.firstName = firstName;
     }
-    public String getFirstName() {
+    public static String getFirstName() {
         return firstName;
     }
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        Person.lastName = lastName;
     }
-    public String getLastName() {
+    public static String getLastName() {
         return lastName;
+    }
+    @Override
+    public String toString() {
+        if (!Person.getLastName().equals("")) {
+            return Person.getFirstName() + " " + Person.getLastName();
+        } else  {
+            return Person.getFirstName();
+        }
     }
 }

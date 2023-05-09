@@ -2,10 +2,10 @@ import java.util.Random;
 
 public class Numbers
 {
-    private int randomNum;
+    private static int randomNum;
 
     public void setRandomNum(int randomNum) {
-        this.randomNum = randomNum;
+        Numbers.randomNum = randomNum;
     }
     public int getRandomNum() {
         return randomNum;
@@ -17,18 +17,15 @@ public class Numbers
     }
     public boolean compareNumber(int guess)
     {
-        if (guess == getRandomNum())
-        {
-            System.out.println("Congratulations, you guessed the number!");
+        if (guess == getRandomNum()) {
+            System.out.println("Congratulations, you guessed the number!\n$1000.00 has been added!\n");
             return true;
         }
-        if (guess > getRandomNum())
-        {
+        if (guess > getRandomNum()) {
             System.out.println("I'm sorry. That guess was too high.");
             return false;
         }
-        if (guess < getRandomNum())
-        {
+        if (guess < getRandomNum()) {
             System.out.println("I'm sorry. That guess was too low.");
             return false;
         }
