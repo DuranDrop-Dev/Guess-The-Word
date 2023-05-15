@@ -1,21 +1,21 @@
 public class Hosts extends Person
 {
-    private static String firstName;
-    private static String lastName;
-    public static Numbers newNumber = new Numbers();
+    private String firstName;
+    private String lastName;
+    public Numbers newNumber = new Numbers();
     public Hosts() {
         super();
     }
     public void setFirstName(String firstName) {
-        Hosts.firstName = firstName;
+        this.firstName = firstName;
     }
     public void setLastName(String lastName) {
-        Hosts.lastName = lastName;
+        this.lastName = lastName;
     }
-    public static String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
-    public static String getLastName() {
+    public String getLastName() {
         return lastName;
     }
     public void randomizeNum() {
@@ -23,10 +23,10 @@ public class Hosts extends Person
     }
     @Override
     public String toString() {
-        if (!Hosts.getLastName().equals("")) {
-            return Hosts.getFirstName() + " " + Hosts.getLastName();
+        if (!this.getLastName().equals("")) {
+            return this.getFirstName() + " " + this.getLastName();
         } else {
-            return Hosts.getFirstName();
+            return this.getFirstName();
         }
     }
 }

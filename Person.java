@@ -17,21 +17,21 @@ public class Person
     public void setFirstName(String firstName) {
         Person.firstName = firstName;
     }
-    public static String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
     public void setLastName(String lastName) {
         Person.lastName = lastName;
     }
-    public static String getLastName() {
+    public String getLastName() {
         return lastName;
     }
     @Override
     public String toString() {
-        if (!Person.getLastName().equals("")) {
-            return Person.getFirstName() + " " + Person.getLastName();
+        if (!this.getLastName().equals("")) {
+            return this.getFirstName() + " " + this.getLastName();
         } else  {
-            return Person.getFirstName();
+            return this.getFirstName();
         }
     }
 }

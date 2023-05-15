@@ -18,7 +18,7 @@ public class Numbers
     public boolean compareNumber(int guess)
     {
         if (guess == getRandomNum()) {
-            System.out.println("Congratulations, you guessed the number!\n$1000.00 has been added!\n");
+            System.out.println("Congratulations, you guessed the number correctly!");
             return true;
         }
         if (guess > getRandomNum()) {

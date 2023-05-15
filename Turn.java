@@ -1,30 +1,49 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class Turn
 {
-    public final double correctAnswer = 1000.00;
-    public final double incorrectAnswer = 100.00;
+    public int getPrizeInt() {
+        Random randomPrizeInt = new Random();
+        return randomPrizeInt.nextInt(2);
+    }
+
     public boolean takeTurn(Players player, Hosts host) {
-        int guess;
+        // Declarations
+        Money moneyPrize = new Money();
+        Physical physicalPrize = new Physical();
         Scanner input = new Scanner(System.in);
         Numbers newNum = new Numbers();
+        int prizeInteger = getPrizeInt();
 
-        // Initial Guess
-        System.out.println(host + " says: " + player +
-                "\nPlease enter a guess for the random number between 0 and 100");
-        guess = Integer.parseInt(input.nextLine());
+        // Display prizeInteger
+        // System.out.println("prizeInt == "+prizeInteger);
 
-        // Try again
-        while (!newNum.compareNumber(guess))
-        {
-            player.setMoney(player.getMoney() - incorrectAnswer);
-            System.out.println(host + ": WRONG ANSWER! -$100.00!\n\n" + player + "\nPlease try again!");
-            guess = Integer.parseInt(input.nextLine());
+        // Initial Host prompt
+        System.out.println(host + " says:\nPlayer " + player +
+                ", please enter a guess for the random number between 0 and 100");
+        int guess = Integer.parseInt(input.nextLine());
+
+        if (!newNum.compareNumber(guess)) {
+            // Wrong Money answer
+            if  (prizeInteger == 1) {
+                player.setMoney(player.getMoney() + moneyPrize.displayWinnings(player, false));
+            }
+            // Wrong Physical answer
+            if (prizeInteger == 0) {
+                physicalPrize.displayWinnings(player, false);
+            }
+            return false;
+        } else {
+            // Money Winner
+            if (prizeInteger == 1) {
+                player.setMoney(player.getMoney() + moneyPrize.displayWinnings(player, true));
+            }
+            // Physical Winner
+            if (prizeInteger == 0) {
+                physicalPrize.displayWinnings(player,true);
+            }
+            return true;
         }
-
-        // Add win prize
-        player.setMoney(player.getMoney() + correctAnswer);
-
-        return true;
     }
 }
