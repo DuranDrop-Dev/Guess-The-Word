@@ -1,6 +1,6 @@
 # WordGame
 <h2>Java II Lesson 4 Project</h2>
-<li>Host, Player, & Turn classes added</li>
-<li>Added wrong answer penalty</li>
-<li>Added prize for guessing correct number</li>
-<li>Prompts rephrased</li>
+<li>Award interface added</li>
+<li>Money and Physical implementation classes of Award added</li>
+<li>Static issues addressed</li>
+<li>Code clean up</li>

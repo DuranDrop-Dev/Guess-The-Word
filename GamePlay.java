@@ -45,6 +45,14 @@ public class GamePlay
                 // Show score
                 displayScore();
 
+                // Keep playing?
+                System.out.println("Would like to keep playing? y for Yes or n for no");
+                String s = name.nextLine();
+                if (s.equals("n")) {
+                    System.out.println("Goodbye...");
+                    break;
+                }
+
                 // New random number
                 host.randomizeNum();
 
