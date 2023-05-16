@@ -3,7 +3,8 @@ public class GamePlay
 {
     private static final Hosts host = new Hosts();
     private static final Players[] currentPlayers = new Players[3];
-    public static void displayScore() {
+    public static void displayScore()
+    {
         System.out.println("SCORE");
         for (Players currentPlayer : currentPlayers) {
             System.out.println(currentPlayer);
@@ -14,7 +15,6 @@ public class GamePlay
     {
         // Create scanner and get user input
         Scanner name = new Scanner(System.in);
-        Phrases phrase = new Phrases();
 
         // Host
         System.out.println("Enter first name for Host");
@@ -34,21 +34,24 @@ public class GamePlay
         // Generate a phrase for the gameplay
         System.out.println("Host is choosing a phrase:");
         host.hostSetPhrase(name.nextLine());
-        phrase.setPlayingPhrase(Phrases.gamePhrase);
+        Phrases.setPlayingPhrase(Phrases.gamePhrase);
 
         // Create a game
         Turn turn = new Turn();
 
         // Gameplay loop
-        for (int i = 0; i < currentPlayers.length; i++) {
-            if (turn.takeTurn(currentPlayers[i], host)) {
+        for (int i = 0; i < currentPlayers.length; i++)
+        {
+            if (turn.takeTurn(currentPlayers[i], host))
+            {
                 // Show score
                 displayScore();
 
                 // Keep playing?
                 System.out.println("Would like to keep playing? y for Yes or n for no");
                 String s = name.nextLine();
-                if (s.equals("n")) {
+                if (s.equals("n"))
+                {
                     System.out.println("Goodbye...");
                     break;
                 }
@@ -56,10 +59,11 @@ public class GamePlay
                 // Generate a phrase for the gameplay
                 System.out.println("Host is choosing a phrase:");
                 host.hostSetPhrase(name.nextLine());
-                phrase.setPlayingPhrase(Phrases.gamePhrase);
+                Phrases.setPlayingPhrase(Phrases.gamePhrase);
             }
             // Rotate to player 1
-            if (i==2) {
+            if (i==2)
+            {
                 i=-1;
             }
         }

@@ -1,3 +1,4 @@
-public interface Award {
+public interface Award
+{
     int displayWinnings(Players player, boolean isTrue);
 }

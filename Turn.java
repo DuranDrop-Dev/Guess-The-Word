@@ -3,17 +3,20 @@ import java.util.Random;
 
 public class Turn
 {
-    public int getPrizeInt() {
+    public static int getPrizeInt()
+    {
         Random randomPrizeInt = new Random();
         return randomPrizeInt.nextInt(2);
     }
 
-    public boolean takeTurn(Players player, Hosts host) {
+    public boolean takeTurn(Players player, Hosts host)
+    {
         // Declarations
-        Money moneyPrize = new Money();
-        Physical physicalPrize = new Physical();
-        Phrases phrase = new Phrases();
         Scanner input = new Scanner(System.in);
+
+        Physical physicalPrize = new Physical();
+        Money moneyPrize = new Money();
+
         int prizeInteger = getPrizeInt();
 
         // Initial Host prompt
@@ -22,23 +25,30 @@ public class Turn
         Phrases.findLetters(input.nextLine());
 
         // Check input
-        if (!phrase.comparePhrase()) {
+        if (!Phrases.comparePhrase())
+        {
             // Wrong Money answer
-            if  (prizeInteger == 1) {
+            if  (prizeInteger == 1)
+            {
                 player.setMoney(player.getMoney() + moneyPrize.displayWinnings(player, false));
             }
             // Wrong Physical answer
-            if (prizeInteger == 0) {
+            if (prizeInteger == 0)
+            {
                 physicalPrize.displayWinnings(player, false);
             }
             return false;
-        } else {
+        }
+        else
+        {
             // Money Winner
-            if (prizeInteger == 1) {
+            if (prizeInteger == 1)
+            {
                 player.setMoney(player.getMoney() + moneyPrize.displayWinnings(player, true));
             }
             // Physical Winner
-            if (prizeInteger == 0) {
+            if (prizeInteger == 0)
+            {
                 physicalPrize.displayWinnings(player,true);
             }
             return true;

@@ -1,35 +1,25 @@
 public class Players extends Person
 {
-    private String firstName;
-    private String lastName;
-    private double money = 1000;
-    public Players() {
-        super();
-    }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    public String getFirstName() {
-        return firstName;
-    }
-    public String getLastName() {
-        return lastName;
-    }
-    public void setMoney(double money) {
-        this.money = money;
-    }
-    public double getMoney() {
-        return money;
-    }
+    private static String firstName;
+    private static String lastName;
+    private static double money = 1000;
+    public Players() { super(); }
+    public void setFirstName(String first) { firstName = first; }
+    public void setLastName(String last) { lastName = last; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public void setMoney(double mon) { money = mon; }
+    public double getMoney() { return money; }
     @Override
-    public String toString() {
-        if (!this.getLastName().equals("")) {
-            return this.getFirstName() + " " + this.getLastName() + ":$" + String.format("%.2f", getMoney());
-        } else {
-            return this.getFirstName() + ":$" + String.format("%.2f", getMoney());
+    public String toString()
+    {
+        if (!lastName.equals(""))
+        {
+            return firstName + " " + lastName + ":$" + String.format("%.2f", money);
+        }
+        else
+        {
+            return firstName + ":$" + String.format("%.2f", money);
         }
     }
 }

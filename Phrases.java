@@ -2,20 +2,27 @@ public class Phrases {
     public static String gamePhrase;
     public static String playingPhrase;
 
-    // TODO throwing exception, why?
-    public static void findLetters(String guess) {
-        try {
-            if (guess.length() == 1) {
-                char charGuess = guess.charAt(0);
+    public static void findLetters(String guess)
+    {
+        try
+        {
+            if (guess.length() == 1)
+            {
                 StringBuilder playingPhraseBuilt = new StringBuilder(playingPhrase);
-                for (int i = 0; i < gamePhrase.length(); i++) {
-                    if (gamePhrase.charAt(i) == charGuess) {
+                char charGuess = guess.charAt(0);
+
+                for (int i = 0; i < gamePhrase.length(); i++)
+                {
+                    if (gamePhrase.charAt(i) == charGuess)
+                    {
                         playingPhraseBuilt.setCharAt(i, charGuess);
                         playingPhrase = String.valueOf(playingPhraseBuilt);
                     }
                 }
                 System.out.println(playingPhraseBuilt);
-            } else {
+            }
+            else
+            {
                 throw new MultipleLettersException();
             }
         }
@@ -23,11 +30,13 @@ public class Phrases {
             System.out.println(e.getMessage());
         }
     }
-    public void setPlayingPhrase(String s) {
-        String[] words = s.split(" ");
+    public static void setPlayingPhrase(String s)
+    {
         StringBuilder newString = new StringBuilder();
+        String[] words = s.split(" ");
 
-        for (String w : words) {
+        for (String w : words)
+        {
             newString.append("_".repeat(w.length())).append(" ");
         }
 
@@ -35,21 +44,28 @@ public class Phrases {
         playingPhrase = String.valueOf(newString);
         System.out.println(newString);
     }
-    public void setPhrase(String phrase) {
+    public static void setPhrase(String phrase) {
         gamePhrase = phrase;
     }
-    public String getPhrase() {
+    public static String getPhrase() {
         return gamePhrase;
     }
-    public boolean comparePhrase() {
-        try {
-            if (playingPhrase.equals(getPhrase())) {
+    public static boolean comparePhrase()
+    {
+        try
+        {
+            if (playingPhrase.equals(getPhrase()))
+            {
                 System.out.println("Congratulations, you have completed the phrase correctly!");
                 return true;
-            } else {
+            }
+            else
+            {
                 System.out.println("Sorry your guess is incomplete!");
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             System.out.println(e.getMessage());
         }
         return false;
