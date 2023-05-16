@@ -42,7 +42,7 @@ public class Phrases {
 
         newString.deleteCharAt(newString.length()-1);
         playingPhrase = String.valueOf(newString);
-        System.out.println(newString);
+        System.out.println("The phrase to guess is: " + newString);
     }
     public static void setPhrase(String phrase) { gamePhrase = phrase; }
     public static String getPhrase() { return gamePhrase; }
