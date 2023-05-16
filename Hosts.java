@@ -2,7 +2,7 @@ public class Hosts extends Person
 {
     private String firstName;
     private String lastName;
-    public Numbers newNumber = new Numbers();
+    private static final Phrases phrase = new Phrases();
     public Hosts() {
         super();
     }
@@ -18,8 +18,11 @@ public class Hosts extends Person
     public String getLastName() {
         return lastName;
     }
-    public void randomizeNum() {
-        newNumber.generateNumber();
+    public void hostSetPhrase(String s) {
+        phrase.setPhrase(s);
+        // Display displayGamePhrase TESTING ONLY
+        String displayGamePhrase = phrase.getPhrase();
+        System.out.println("Game phrase: " + displayGamePhrase);
     }
     @Override
     public String toString() {

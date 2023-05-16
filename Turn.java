@@ -12,19 +12,17 @@ public class Turn
         // Declarations
         Money moneyPrize = new Money();
         Physical physicalPrize = new Physical();
+        Phrases phrase = new Phrases();
         Scanner input = new Scanner(System.in);
-        Numbers newNum = new Numbers();
         int prizeInteger = getPrizeInt();
-
-        // Display prizeInteger
-        // System.out.println("prizeInt == "+prizeInteger);
 
         // Initial Host prompt
         System.out.println(host + " says:\nPlayer " + player +
-                ", please enter a guess for the random number between 0 and 100");
-        int guess = Integer.parseInt(input.nextLine());
+                ", please enter a guess for the game phrase!");
+        Phrases.findLetters(input.nextLine());
 
-        if (!newNum.compareNumber(guess)) {
+        // Check input
+        if (!phrase.comparePhrase()) {
             // Wrong Money answer
             if  (prizeInteger == 1) {
                 player.setMoney(player.getMoney() + moneyPrize.displayWinnings(player, false));

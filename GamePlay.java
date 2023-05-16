@@ -14,6 +14,7 @@ public class GamePlay
     {
         // Create scanner and get user input
         Scanner name = new Scanner(System.in);
+        Phrases phrase = new Phrases();
 
         // Host
         System.out.println("Enter first name for Host");
@@ -30,11 +31,10 @@ public class GamePlay
             currentPlayers[i].setLastName(name.nextLine());
         }
 
-        // Generate a number for the gameplay
-        host.randomizeNum();
-
-        // Display random generated number
-        // System.out.println("NEW # "+host.newNumber.getRandomNum());
+        // Generate a phrase for the gameplay
+        System.out.println("Host is choosing a phrase:");
+        host.hostSetPhrase(name.nextLine());
+        phrase.setPlayingPhrase(Phrases.gamePhrase);
 
         // Create a game
         Turn turn = new Turn();
@@ -53,11 +53,10 @@ public class GamePlay
                     break;
                 }
 
-                // New random number
-                host.randomizeNum();
-
-                // Display random generated number
-                // System.out.println("NEW # "+host.newNumber.getRandomNum());
+                // Generate a phrase for the gameplay
+                System.out.println("Host is choosing a phrase:");
+                host.hostSetPhrase(name.nextLine());
+                phrase.setPlayingPhrase(Phrases.gamePhrase);
             }
             // Rotate to player 1
             if (i==2) {
