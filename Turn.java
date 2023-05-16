@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -20,9 +21,27 @@ public class Turn
         int prizeInteger = getPrizeInt();
 
         // Initial Host prompt
-        System.out.println(host + " says:\nPlayer " + player +
-                ", please enter a guess for the game phrase!");
-        Phrases.findLetters(input.nextLine());
+        try
+        {
+            System.out.println(host + " says:\nPlayer " + player +
+                    ", please enter a letter for the game phrase!");
+            StringBuilder string = new StringBuilder(input.nextLine());
+            for (int i=0; i<string.length(); i++)
+            {
+                if (Character.isLetter(string.charAt(i)))
+                {
+                    Phrases.findLetters(String.valueOf(string));
+                }
+                else
+                {
+                    throw new IOException();
+                }
+            }
+        }
+        catch (IOException e)
+        {
+            System.out.println("Letters only, lose a turn!");
+        }
 
         // Check input
         if (!Phrases.comparePhrase())

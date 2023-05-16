@@ -1,8 +1,8 @@
 public class Players extends Person
 {
-    private static String firstName;
-    private static String lastName;
-    private static double money = 1000;
+    private String firstName;
+    private String lastName;
+    private double money = 1000;
     public Players() { super(); }
     public void setFirstName(String first) { firstName = first; }
     public void setLastName(String last) { lastName = last; }

@@ -44,12 +44,8 @@ public class Phrases {
         playingPhrase = String.valueOf(newString);
         System.out.println(newString);
     }
-    public static void setPhrase(String phrase) {
-        gamePhrase = phrase;
-    }
-    public static String getPhrase() {
-        return gamePhrase;
-    }
+    public static void setPhrase(String phrase) { gamePhrase = phrase; }
+    public static String getPhrase() { return gamePhrase; }
     public static boolean comparePhrase()
     {
         try
@@ -61,7 +57,7 @@ public class Phrases {
             }
             else
             {
-                System.out.println("Sorry your guess is incomplete!");
+                System.out.println("Your guess is incomplete!");
             }
         }
         catch (Exception e)

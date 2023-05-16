@@ -6,12 +6,12 @@ public class Money implements Award{
     {
         if (isTrue)
         {
-            System.out.println(player + " is the winner of $1000!\n");
+            System.out.println(player + " wins $1000!\n");
             return CORRECT;
         }
         else
         {
-            System.out.println(player + " is incorrect and loses $100!\n");
+            System.out.println(player + " loses $100!\n");
             return WRONG;
         }
     }
