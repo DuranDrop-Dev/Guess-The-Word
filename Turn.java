@@ -26,21 +26,26 @@ public class Turn
             System.out.println(host + " says:\nPlayer " + player +
                     ", please enter a letter for the game phrase!");
             StringBuilder string = new StringBuilder(input.nextLine());
-            for (int i=0; i<string.length(); i++)
+            if (Character.isLetter(string.charAt(0)))
             {
-                if (Character.isLetter(string.charAt(i)))
-                {
-                    Phrases.findLetters(String.valueOf(string));
-                }
-                else
-                {
-                    throw new IOException();
-                }
+                Phrases.findLetters(String.valueOf(string));
+            }
+            else
+            {
+                throw new IOException();
             }
         }
         catch (IOException e)
         {
             System.out.println("Letters only, lose a turn!");
+        }
+        catch (StringIndexOutOfBoundsException e)
+        {
+            System.out.println("Your guess cannot be blank!, lose a turn!");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
         }
 
         // Check input
