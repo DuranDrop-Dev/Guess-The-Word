@@ -1,5 +1,5 @@
+import javax.swing.*;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.Random;
 
 public class Turn
@@ -13,7 +13,7 @@ public class Turn
     public boolean takeTurn(Players player, Hosts host)
     {
         // Declarations
-        Scanner input = new Scanner(System.in);
+        // Scanner input = new Scanner(System.in);
 
         Physical physicalPrize = new Physical();
         Money moneyPrize = new Money();
@@ -23,9 +23,11 @@ public class Turn
         // Initial Host prompt
         try
         {
-            System.out.println(host + " says:\nPlayer " + player +
-                    ", please enter a letter for the game phrase!");
-            StringBuilder string = new StringBuilder(input.nextLine());
+            /* System.out.println(host + " says:\nPlayer " + player +
+                     ", please enter a letter for the game phrase!"); */
+            String playerGuess = JOptionPane.showInputDialog(null, host +
+                    " says:\nPlayer " + player + ", please enter a letter for the game phrase!");
+            StringBuilder string = new StringBuilder(playerGuess);
             if (Character.isLetter(string.charAt(0)))
             {
                 Phrases.findLetters(String.valueOf(string));
@@ -37,15 +39,18 @@ public class Turn
         }
         catch (IOException e)
         {
-            System.out.println("Letters only, lose a turn!");
+            // System.out.println("Letters only, lose a turn!");
+            JOptionPane.showMessageDialog(GUI.dialog, "Letters only, lose a turn!");
         }
         catch (StringIndexOutOfBoundsException e)
         {
-            System.out.println("Your guess cannot be blank!, lose a turn!");
+            // System.out.println("Your guess cannot be blank!, lose a turn!");
+            JOptionPane.showMessageDialog(GUI.dialog, "Your guess cannot be blank!, lose a turn!");
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            // System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(GUI.dialog, e.getMessage());
         }
 
         // Check input
@@ -61,6 +66,8 @@ public class Turn
             {
                 physicalPrize.displayWinnings(player, false);
             }
+            GUI.updatePlayerScoreBoard();
+            GUI.playingPhrase.setText(Phrases.playingPhrase);
             return false;
         }
         else
@@ -75,6 +82,8 @@ public class Turn
             {
                 physicalPrize.displayWinnings(player,true);
             }
+            GUI.updatePlayerScoreBoard();
+            GUI.playingPhrase.setText(Phrases.playingPhrase);
             return true;
         }
     }
