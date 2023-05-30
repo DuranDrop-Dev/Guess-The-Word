@@ -11,8 +11,7 @@ public class GamePlay
         }
         System.out.println();
     }
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws InterruptedException {
         // Create scanner and get user input
         Scanner name = new Scanner(System.in);
 

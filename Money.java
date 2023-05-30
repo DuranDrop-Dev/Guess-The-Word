@@ -1,5 +1,3 @@
-import javax.swing.*;
-
 public class Money implements Award{
     private final static int CORRECT = 1000;
     private final static int WRONG = -100;
@@ -8,14 +6,13 @@ public class Money implements Award{
     {
         if (isTrue)
         {
-            // System.out.println(player + " wins $1000!\n");
-            JOptionPane.showMessageDialog(null, player + " wins $1000!\n");
+            GUI.textArea.append(player + " wins $1000!\n");
             return CORRECT;
         }
         else
         {
-            // System.out.println(player + " loses $100!\n");
-            JOptionPane.showMessageDialog(null, player + " loses $100!\n");
+            GUI.textArea.append(player + " loses $100!\n");
+            GUI.verticalScrollBar.setValue(GUI.verticalScrollBar.getMaximum());
             return WRONG;
         }
     }

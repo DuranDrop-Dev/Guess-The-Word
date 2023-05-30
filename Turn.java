@@ -1,4 +1,4 @@
-import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.util.Random;
 
@@ -9,28 +9,33 @@ public class Turn
         Random randomPrizeInt = new Random();
         return randomPrizeInt.nextInt(2);
     }
-
-    public boolean takeTurn(Players player, Hosts host)
+    public boolean takeTurn(Players player, Hosts host) throws InterruptedException
     {
         // Declarations
-        // Scanner input = new Scanner(System.in);
-
         Physical physicalPrize = new Physical();
         Money moneyPrize = new Money();
-
         int prizeInteger = getPrizeInt();
 
         // Initial Host prompt
+        String msg = host + " says:\nPlayer " + player +
+                ", please enter a letter for the game phrase!\n";
+        GUI.verticalScrollBar.setValue(GUI.verticalScrollBar.getMaximum());
+        GUI.gamePrompt.hostPrompt(msg);
+        GUI.gamePrompt.setBackground(Color.LIGHT_GRAY);
+        GUI.gbc.gridx = 0;
+        GUI.gbc.gridy = 5;
+        GUI.panel.add(GUI.gamePrompt, GUI.gbc);
+        GUI.panel.revalidate();
+        GUI.gamePrompt.wait();
+
+        // Check input
         try
         {
-            /* System.out.println(host + " says:\nPlayer " + player +
-                     ", please enter a letter for the game phrase!"); */
-            String playerGuess = JOptionPane.showInputDialog(null, host +
-                    " says:\nPlayer " + player + ", please enter a letter for the game phrase!");
-            StringBuilder string = new StringBuilder(playerGuess);
+            StringBuilder string = new StringBuilder(GUI.getPlayerGuess());
             if (Character.isLetter(string.charAt(0)))
             {
                 Phrases.findLetters(String.valueOf(string));
+
             }
             else
             {
@@ -39,18 +44,15 @@ public class Turn
         }
         catch (IOException e)
         {
-            // System.out.println("Letters only, lose a turn!");
-            JOptionPane.showMessageDialog(GUI.dialog, "Letters only, lose a turn!");
+            GUI.saveMessages("Letters only, lose a turn!");
         }
         catch (StringIndexOutOfBoundsException e)
         {
-            // System.out.println("Your guess cannot be blank!, lose a turn!");
-            JOptionPane.showMessageDialog(GUI.dialog, "Your guess cannot be blank!, lose a turn!");
+            GUI.saveMessages("Your guess cannot be blank!, lose a turn!");
         }
         catch (Exception e)
         {
-            // System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(GUI.dialog, e.getMessage());
+            GUI.saveMessages(e.getMessage());
         }
 
         // Check input

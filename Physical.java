@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.util.Random;
 
 public class Physical implements Award {
@@ -14,17 +13,14 @@ public class Physical implements Award {
         int thePrize = getRandomPrize();
         if (isTrue)
         {
-            /* System.out.println(player + " is the winner!");
-            System.out.println(prizes[thePrize] + " is your prize!\n"); */
-            JOptionPane.showMessageDialog(null, player + " is the winner!\n" +
+            GUI.textArea.append(player + " is the winner!\n" +
                 prizes[thePrize] + " is your prize!\n");
         }
         else
         {
-            /* System.out.println(player + " is incorrect!");
-            System.out.println(prizes[thePrize] + " could have been your prize!\n"); */
-            JOptionPane.showMessageDialog(null, player + " is incorrect!\n" +
+            GUI.textArea.append(player + " is incorrect!\n" +
                     prizes[thePrize] + " could have been your prize!");
+            GUI.verticalScrollBar.setValue(GUI.verticalScrollBar.getMaximum());
         }
         return 0;
     }

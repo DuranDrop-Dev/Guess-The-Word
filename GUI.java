@@ -1,110 +1,203 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.font.TextAttribute;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GUI {
-    private static final Players[] currentPlayers = new Players[3];
-    private static final Hosts host = new Hosts();
-    private static boolean playerIsSet = false;
-    private static boolean hostIsSet = false;
-    private static final JLabel hostName = new JLabel("", SwingConstants.CENTER);
-    public static JButton addHostAndPhrase = new JButton("Host");
-    public static JLabel playersName = new JLabel("", SwingConstants.CENTER);
-    public static JButton addPlayers = new JButton("Players");
-    public static final JLabel playingPhrase = new JLabel("PHRASE", SwingConstants.CENTER);
-    private static final JLabel prompt = new JLabel("* Please add host & players!", SwingConstants.CENTER);
+    public static Hosts host = new Hosts();
+    public static boolean playerIsSet = false;
+    public static boolean hostIsSet = false;
+    public static JTextPane hostName = new JTextPane();
+    public static JTextArea playersName = new JTextArea();
+    public static final JLabel playingPhrase = new JLabel("WordGame", SwingConstants.CENTER);
     public static JButton startGame = new JButton("PLAY GAME");
     public static JFrame frame = new JFrame("WordGame");
+    public static JPanel panel = new JPanel(new GridBagLayout());
     public static JDialog dialog = new JDialog(frame, "Message", true);
+    public static JMenuBar bar = new JMenuBar();
+    public static JMenu gameMenu = new JMenu("Game");
+    public static JMenuItem addPlayers = new JMenuItem("Add Players");
+    public static JMenuItem addHostAndPhrase = new JMenuItem("Add Host");
+    public static JMenu aboutMenu = new JMenu("About");
+    public static JMenuItem layout = new JMenuItem("Layout");
+    public static JTextArea textArea = new JTextArea(6, 20);
+    public static JCheckBox saveMessages = new JCheckBox("Save Messages");
+    public static GridBagConstraints gbc = new GridBagConstraints();
+    public static String playerGuess = "";
+    public static final GamePrompt gamePrompt = new GamePrompt();
+    public static final HostPrompt prompt = new HostPrompt();
+    public static JScrollPane messageBox = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    public static JScrollBar verticalScrollBar = messageBox.getVerticalScrollBar();
 
     public static void main(String[] args) {
         // Predefined dimensions
-        final int FRAME_WIDTH = 700;
-        final int FRAME_HEIGHT = 500;
-        final int BUTTON_WIDTH = 200;
-        final int BUTTON_HEIGHT = 30;
+        final int FRAME_WIDTH = 800;
+        final int FRAME_HEIGHT = 700;
 
         // Main window
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setLayout(null);
-        frame.setBounds(0,0, FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
-        // Bounds and Sizes
-        playingPhrase.setBounds((FRAME_WIDTH / 2) - 100,100, 200, 30);
-        addPlayers.setBounds(FRAME_WIDTH - 300, 25, BUTTON_WIDTH, BUTTON_HEIGHT);
-        playersName.setBounds(FRAME_WIDTH - 400, 15, 400,100);
-        addHostAndPhrase.setBounds(100,25, BUTTON_WIDTH, BUTTON_HEIGHT);
-        hostName.setBounds(100, 50,200,30);
-        startGame.setBounds(FRAME_WIDTH / 2 - 125, FRAME_HEIGHT - 150, 250, 50);
-        prompt.setBounds(FRAME_WIDTH / 2 - 125, FRAME_HEIGHT - 150, 250, 50);
+        panel.setBackground(Color.LIGHT_GRAY);
+
+        messageBox.setPreferredSize(new Dimension(400,200));
+
+        textArea.setText("* Please add host & players from the Game menu!\n");
+        textArea.setEditable(false);
+        textArea.setLineWrap(true);
 
         // Style
-        Font font = new Font("serif", Font.BOLD, 25);
+        Font regFont = new Font("arial", Font.BOLD, 12);
+        Font phraseFont = new Font("arial", Font.BOLD, 25);
         Map<TextAttribute, Object> attributes = new HashMap<>();
         attributes.put(TextAttribute.TRACKING, 0.1);
-        Font font2 = font.deriveFont(attributes);
+        Font font2 = phraseFont.deriveFont(attributes);
+
         playingPhrase.setFont(font2);
-        playingPhrase.setForeground(Color.BLUE);
+        playingPhrase.setForeground(Color.DARK_GRAY);
+
+        playersName.setEditable(false);
+        playersName.setText("Your Players");
+        playersName.setFont(regFont);
+        playersName.setBackground(Color.LIGHT_GRAY);
+
+        hostName.setEditable(false);
+        hostName.setText("Your Host");
+        hostName.setFont(regFont);
+        hostName.setBackground(Color.LIGHT_GRAY);
+
+        layout.addActionListener(e -> JOptionPane.showMessageDialog(null,
+            """
+                I chose the layout GridBagLayout because
+                I thought it could keep the components
+                centered easier than the others. Little
+                did I know it would have such a great learning
+                curb. Either way, I am pleased with the outcome."""));
+
+        saveMessages.setToolTipText("Unchecking the box deletes old messages");
+        saveMessages.setBackground(Color.LIGHT_GRAY);
+        saveMessages.setSelected(true);
+
+        textArea.setFont(regFont);
+
+        // Menu
+        bar.add(gameMenu);
+        gameMenu.setMnemonic(KeyEvent.VK_G);
+        gameMenu.setBorder(new EmptyBorder(10, 10, 10, 10));
+        gameMenu.add(addHostAndPhrase);
+        gameMenu.add(addPlayers);
+
+        bar.add(aboutMenu);
+        aboutMenu.setMnemonic(KeyEvent.VK_A);
+        aboutMenu.add(layout);
+        aboutMenu.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         // Layout
+        gbc.insets = new Insets(10, 10, 10, 10);
+/*
+        ImageIcon backgroundImage = new ImageIcon("image.jpg");
+        backgroundImage.setImage(backgroundImage.getImage().getScaledInstance(1200,900, Image.SCALE_DEFAULT));
+        JLabel myLabel = new JLabel(backgroundImage);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = panel.getWidth();
+        panel.add(myLabel, gbc);
+*/
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(playingPhrase);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(hostName, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(playersName, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panel.add(saveMessages, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        panel.add(messageBox, gbc);
+
         startGame.setVisible(false);
-        frame.add(startGame);
-        frame.add(addHostAndPhrase);
-        frame.add(hostName);
-        frame.add(addPlayers);
-        frame.add(playersName);
-        frame.add(playingPhrase);
-        frame.add(prompt);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        panel.add(startGame, gbc);
+
+        frame.setContentPane(panel);
+        frame.setJMenuBar(bar);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
         // Add Host Listener
         addHostAndPhrase.addActionListener(e -> {
-            addHost();
-            addPhrase();
-            addStartButton();
+            try {
+                addHost();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
         });
 
         // Add Players Listener
         addPlayers.addActionListener(e -> {
-            addAllPlayers();
-            addStartButton();
+            try {
+                addAllPlayers();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
         });
 
         // Start Game Listener
-        startGame.addActionListener(e -> startPlayingGame());
+        startGame.addActionListener(e -> {
+            startPlayingGame();
+            startGame.setVisible(false);
+        });
     }
+
     public static void addHost() {
-        String hostFirstName = JOptionPane.showInputDialog(null, "Enter first name for Host");
-        host.setFirstName(hostFirstName);
-        String hostLastName = JOptionPane.showInputDialog(null, "Enter last name for Host? Press ok to skip");
-        host.setLastName(hostLastName);
-        hostName.setText(host.toString());
+        // Messages
+        String firstName = "Enter a first name for host: \n";
+        String lastName = "Enter last name for Host?\n";
+        String phrase = "Choose a phrase\n";
+
+        // Create prompt
+        prompt.HostFirstName(firstName, lastName, phrase);
+        prompt.setBackground(Color.LIGHT_GRAY);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        frame.add(prompt, gbc);
+        frame.revalidate();
     }
-    public static void addPhrase() {
-        String phrase = JOptionPane.showInputDialog(null, "Choose a phrase");
-        host.hostSetPhrase(phrase);
-        Phrases.setPlayingPhrase(Phrases.gamePhrase);
-        playingPhrase.setText(Phrases.playingPhrase);
-        hostIsSet = true;
-    }
+
     public static void addAllPlayers() {
-        for (int i = 0; i < currentPlayers.length; i++) {
-            currentPlayers[i] = new Players();
-            String enterFirstName = JOptionPane.showInputDialog(null, "Enter first name for Player " + (i+1));
-            currentPlayers[i].setFirstName(enterFirstName);
-            String enterLastName = JOptionPane.showInputDialog(null, "Enter last name for Player " + (i+1) + " Hit enter to skip");
-            currentPlayers[i].setLastName(enterLastName);
-        }
-        updatePlayerScoreBoard();
-        playerIsSet = true;
+        String a1 = "Enter first name for Player 1";
+        String a2 = "Enter last name for Player 1";
+
+        String b1 = "Enter first name for Player 2";
+        String b2 = "Enter last name for Player 2";
+
+        String c1 = "Enter first name for Player 3";
+        String c2 = "Enter last name for Player 3";
+
+        PlayerPrompt prompt = new PlayerPrompt();
+        prompt.Player1FirstName(a1,a2,b1,b2,c1,c2);
+        prompt.setBackground(Color.LIGHT_GRAY);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        frame.add(prompt, gbc);
+        frame.revalidate();
     }
     public static void updatePlayerScoreBoard() {
         StringBuilder allPlayers = new StringBuilder();
-        for (Players currentPlayer : currentPlayers) {
+        for (Players currentPlayer : PlayerPrompt.currentPlayers) {
             allPlayers.append(currentPlayer);
             allPlayers.append("\n");
         }
@@ -116,41 +209,56 @@ public class GUI {
         Turn turn = new Turn();
 
         // Gameplay loop
-        for (int i = 0; i < currentPlayers.length; i++)
+        Thread loopThread = new Thread(() ->
         {
-            if (turn.takeTurn(currentPlayers[i], host))
+            for (int i = 0; i < PlayerPrompt.currentPlayers.length; i++)
             {
-                // Show score
-                displayScore();
-
-                // Keep playing?
-                int keepPlaying = JOptionPane.showConfirmDialog(dialog, "Would like to keep playing?");
-                if (keepPlaying == 1)
+                synchronized (gamePrompt)
                 {
-                    JOptionPane.showMessageDialog(dialog, "Goodbye");
-                    System.exit(1);
-                    break;
+                    try {
+                        if (turn.takeTurn(PlayerPrompt.currentPlayers[i], host)) {
+                            // Keep playing?
+                            panel.remove(gamePrompt);
+                            panel.revalidate();
+
+                            int keepPlaying = JOptionPane.showConfirmDialog(dialog, "Would like to keep playing?");
+                            if (keepPlaying == 1) {
+                                JOptionPane.showMessageDialog(dialog, "Goodbye");
+                                System.exit(1);
+                            }
+                            textArea.setText("");
+                            addHost();
+                            gamePrompt.wait();
+                            startGame.setVisible(false);
+                        }
+                        // Rotate to player 1
+                        if (i == 2) {
+                            i = -1;
+                        }
+                    } catch (Exception e) {
+                        textArea.append(e.getMessage());
+                    }
                 }
-                addPhrase();
             }
-            // Rotate to player 1
-            if (i==2)
-            {
-                i=-1;
-            }
-        }
+        });
+        loopThread.start();
     }
     public static void addStartButton() {
         if (playerIsSet && hostIsSet) {
             startGame.setVisible(true);
         }
     }
-    public static void displayScore()
-    {
-        StringBuilder showScore = new StringBuilder();
-        for (Players currentPlayer : currentPlayers) {
-            showScore.append(currentPlayer).append("\n");
+    public static void setPlayerGuess(String str) {
+        playerGuess = str;
+    }
+    public static String getPlayerGuess() {
+        return playerGuess;
+    }
+    public static void saveMessages(String str) {
+        if (saveMessages.isSelected()) {
+            textArea.append(str);
+        } else {
+            textArea.setText(str);
         }
-        JOptionPane.showMessageDialog(dialog, "SCORE\n" + showScore);
     }
 }
