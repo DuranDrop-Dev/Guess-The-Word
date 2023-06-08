@@ -1,7 +1,8 @@
 package src;
 
-public class MultipleLettersException extends Exception
-{
+public class MultipleLettersException extends Exception {
     @Override
-    public String getMessage() { return "More than one letter was entered"; }
+    public String getMessage() {
+        return "More than one letter was entered";
+    }
 }

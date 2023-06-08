@@ -12,7 +12,7 @@ public class WinComponent extends JComponent {
 
     public WinComponent(int width, int height) {
         // Start-point position
-        xPos = (GUI.FRAME_WIDTH/2) - (width/2);
+        xPos = (GUI.FRAME_WIDTH / 2) - (width / 2);
         yPosBalloon = 800;
 
         // Get image
@@ -27,6 +27,7 @@ public class WinComponent extends JComponent {
         });
         timer.start();
     }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 

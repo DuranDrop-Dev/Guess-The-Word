@@ -8,10 +8,11 @@ import java.awt.*;
 
 public class PlayerPrompt extends JPanel {
     public static Players[] currentPlayers = new Players[3];
-    public void Player1FirstName(String a1, String a2, String b1, String b2,String c1, String c2) {
+
+    public void Player1FirstName(String a1, String a2, String b1, String b2, String c1, String c2) {
         currentPlayers[0] = new Players();
         GUI.saveMessages(a1 + "\n");
-        JTextField field = new JTextField("",15);
+        JTextField field = new JTextField("", 15);
         JButton ok = new JButton("OK");
 
         add(field, BorderLayout.CENTER);
@@ -33,7 +34,8 @@ public class PlayerPrompt extends JPanel {
             Player1LastName(a2, b1, b2, c1, c2);
         });
     }
-    public void Player1LastName(String a2, String b1, String b2,String c1, String c2) {
+
+    public void Player1LastName(String a2, String b1, String b2, String c1, String c2) {
         GUI.saveMessages(a2 + "\n");
         JTextField field = new JTextField("", 15);
         JButton ok = new JButton("OK");
@@ -57,10 +59,11 @@ public class PlayerPrompt extends JPanel {
             Player2FirstName(b1, b2, c1, c2);
         });
     }
-    public void Player2FirstName(String b1, String b2,String c1, String c2) {
+
+    public void Player2FirstName(String b1, String b2, String c1, String c2) {
         currentPlayers[1] = new Players();
         GUI.saveMessages(b1 + "\n");
-        JTextField field = new JTextField("",15);
+        JTextField field = new JTextField("", 15);
         JButton ok = new JButton("OK");
 
         add(field, BorderLayout.CENTER);
@@ -82,6 +85,7 @@ public class PlayerPrompt extends JPanel {
             Player2LastName(b2, c1, c2);
         });
     }
+
     public void Player2LastName(String b2, String c1, String c2) {
         GUI.saveMessages(b2 + "\n");
         JTextField field = new JTextField("", 15);
@@ -106,10 +110,11 @@ public class PlayerPrompt extends JPanel {
             Player3FirstName(c1, c2);
         });
     }
+
     public void Player3FirstName(String c1, String c2) {
         currentPlayers[2] = new Players();
         GUI.saveMessages(c1 + "\n");
-        JTextField field = new JTextField("",15);
+        JTextField field = new JTextField("", 15);
         JButton ok = new JButton("OK");
 
         add(field, BorderLayout.CENTER);
@@ -131,6 +136,7 @@ public class PlayerPrompt extends JPanel {
             Player3LastName(c2);
         });
     }
+
     public void Player3LastName(String c2) {
         GUI.saveMessages(c2 + "\n");
         JTextField field = new JTextField("", 15);

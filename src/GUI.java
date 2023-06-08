@@ -5,6 +5,7 @@ import Utilities.SoundHandler;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.font.TextAttribute;
@@ -12,37 +13,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GUI {
-    public static Hosts host = new Hosts();
+    public static final GamePrompt gamePrompt = new GamePrompt();
     public static boolean playerIsSet = false;
     public static boolean hostIsSet = false;
+    public static Hosts host = new Hosts();
     public static JLabel hostName = new JLabel("Your Host");
     public static JTextArea playersName = new JTextArea();
     public static JLabel playingPhrase = new JLabel("_____");
     public static JButton startGame = new JButton("PLAY GAME");
-    public static JPanel panel = new JPanel();
-    public static JMenuBar bar = new JMenuBar();
-    public static JMenu gameMenu = new JMenu("Game");
-    public static JMenuItem addPlayers = new JMenuItem("Add Players");
-    public static JMenuItem addHostAndPhrase = new JMenuItem("Add Host");
-    public static JMenu aboutMenu = new JMenu("About");
-    public static JMenuItem layout = new JMenuItem("Layout");
-    public static JMenuItem attribution = new JMenuItem("Media Attributions");
     public static JTextArea textArea = new JTextArea(6, 20);
     public static JCheckBox saveMessages = new JCheckBox("Save Messages");
     public static GridBagConstraints gbc = new GridBagConstraints();
     public static String playerGuess = "";
-    public static final GamePrompt gamePrompt = new GamePrompt();
-    public static final HostPrompt prompt = new HostPrompt();
-    public static JScrollPane messageBox = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    public static JScrollBar verticalScrollBar = messageBox.getVerticalScrollBar();
+    public static JScrollPane messageBox = new JScrollPane(textArea);
     public static Color translucent = new Color(0, 0, 0, 0);
     public static Color white = Color.WHITE;
-    public static JLabel title = new JLabel("WordGame");
     public static int FRAME_WIDTH = 1000;
-    public static final int FRAME_HEIGHT = 700;
+    public static int FRAME_HEIGHT = 700;
     public static JFrame frame = new JFrame("WordGame");
     public static JComponent win = new WinComponent(100, 200);
     public static JComponent wrong = new WrongComponent(100, 100);
+    public static JPanel panel = new JPanel();
     public static JPanel contentPanel;
 
     public static void main(String[] args) {
@@ -55,6 +46,17 @@ public class GUI {
             BGPanel.createPanel();
             panel.setPreferredSize(new Dimension(GUI.FRAME_WIDTH, GUI.FRAME_HEIGHT));
             panel.setLayout(new OverlayLayout(panel));
+
+            JLabel title = new JLabel("WordGame");
+            JMenuBar bar = new JMenuBar();
+            JMenu gameMenu = new JMenu("Game");
+            JMenuItem addPlayers = new JMenuItem("Add Players");
+            JMenuItem addHostAndPhrase = new JMenuItem("Add Host");
+            JMenu aboutMenu = new JMenu("About");
+            JMenuItem layout = new JMenuItem("Layout");
+            JMenuItem attribution = new JMenuItem("Media Attributions");
+            DefaultCaret caret = (DefaultCaret) textArea.getCaret();
+            caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
             // BG Music
             SoundHandler.RunMusic("Resources/audio/music.wav", -1);
@@ -74,7 +76,7 @@ public class GUI {
             playingPhrase.setForeground(white);
 
             playersName.setEditable(false);
-            playersName.setText("Your src.Players");
+            playersName.setText("Your Players");
             playersName.setFont(regFont);
             playersName.setBackground(translucent);
             playersName.setForeground(white);
@@ -88,6 +90,7 @@ public class GUI {
             textArea.setLineWrap(true);
             textArea.setFont(regFont);
 
+            messageBox.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
             messageBox.setPreferredSize(new Dimension(400, 200));
 
             saveMessages.setToolTipText("Unchecking the box deletes old messages");
@@ -114,11 +117,12 @@ public class GUI {
                             centered easier than the others. Little
                             did I know it would have such a great learning
                             curb. Either way, I am pleased with the outcome."""));
+
             attribution.addActionListener(e -> JOptionPane.showMessageDialog(null,
                     """
                             All images courtesy of pixabay.com
                                 https://pixabay.com/service/terms/
-                            
+                                                        
                             Sounds:
                                 -BG Music: "Piano loops 104 octave long loop 120 bpm.wav" by josefpres
                                     (License: CC0 Public Domain
@@ -128,8 +132,7 @@ public class GUI {
                                         Link: https://freesound.org/people/nofeedbak/sounds/21871/)
                                 -Winner SoundFX: "466133__humanoide9000__victory-fanfare.wav" by humanoide9000
                                     (License: CC4 Attribution 4.0
-                                        Link: https://freesound.org/people/humanoide9000/sounds/466133/)
-                                """));
+                                        Link: https://freesound.org/people/humanoide9000/sounds/466133/)"""));
 
             // Layout
             gbc.insets = new Insets(5, 50, 5, 50);
@@ -179,7 +182,7 @@ public class GUI {
                 }
             });
 
-            // Add src.Players Listener
+            // Add Players Listener
             addPlayers.addActionListener(e -> {
                 try {
                     addAllPlayers();
@@ -207,6 +210,7 @@ public class GUI {
     }
 
     public static void addHost() {
+        HostPrompt prompt = new HostPrompt();
         host = new Hosts();
         // Messages
         String firstName = "Enter a first name for host: \n";
@@ -216,7 +220,6 @@ public class GUI {
         // Create prompt
         prompt.HostFirstName(firstName, lastName, phrase);
         prompt.setBackground(white);
-        prompt.setBounds(FRAME_WIDTH - 50, 540, 300, 30);
         gbc.gridy = 7;
         contentPanel.add(prompt, gbc);
         contentPanel.revalidate();
@@ -247,7 +250,7 @@ public class GUI {
             allPlayers.append("\n\n");
         }
         playersName.setText(allPlayers.toString());
-        frame.revalidate();
+        contentPanel.revalidate();
     }
 
     public static void startPlayingGame() {
@@ -265,8 +268,8 @@ public class GUI {
                     try {
                         if (turn.takeTurn(PlayerPrompt.currentPlayers[i], host)) {
                             // Keep playing?
-                            panel.remove(gamePrompt);
-                            panel.revalidate();
+                            contentPanel.remove(gamePrompt);
+                            contentPanel.revalidate();
 
                             int keepPlaying = JOptionPane.showConfirmDialog(null, "Would like to keep playing?");
 

@@ -1,18 +1,19 @@
 package src;
 
 import java.util.Scanner;
-public class GamePlay
-{
+
+public class GamePlay {
     private static final Hosts host = new Hosts();
     private static final Players[] currentPlayers = new Players[3];
-    public static void displayScore()
-    {
+
+    public static void displayScore() {
         System.out.println("SCORE");
         for (Players currentPlayer : currentPlayers) {
             System.out.println(currentPlayer);
         }
         System.out.println();
     }
+
     public static void main(String[] args) throws InterruptedException {
         // Create scanner and get user input
         Scanner name = new Scanner(System.in);
@@ -26,9 +27,9 @@ public class GamePlay
         // src.Players
         for (int i = 0; i < currentPlayers.length; i++) {
             currentPlayers[i] = new Players();
-            System.out.println("Enter first name for Player " + (i+1));
+            System.out.println("Enter first name for Player " + (i + 1));
             currentPlayers[i].setFirstName(name.nextLine());
-            System.out.println("Enter last name for Player " + (i+1) + " Hit enter to skip");
+            System.out.println("Enter last name for Player " + (i + 1) + " Hit enter to skip");
             currentPlayers[i].setLastName(name.nextLine());
         }
 
@@ -41,18 +42,15 @@ public class GamePlay
         Turn turn = new Turn();
 
         // Gameplay loop
-        for (int i = 0; i < currentPlayers.length; i++)
-        {
-            if (turn.takeTurn(currentPlayers[i], host))
-            {
+        for (int i = 0; i < currentPlayers.length; i++) {
+            if (turn.takeTurn(currentPlayers[i], host)) {
                 // Show score
                 displayScore();
 
                 // Keep playing?
                 System.out.println("Would like to keep playing? y for Yes or n for no");
                 String s = name.nextLine();
-                if (s.equals("n"))
-                {
+                if (s.equals("n")) {
                     System.out.println("Goodbye...");
                     break;
                 }
@@ -63,9 +61,8 @@ public class GamePlay
                 Phrases.setPlayingPhrase(Phrases.gamePhrase);
             }
             // Rotate to player 1
-            if (i==2)
-            {
-                i=-1;
+            if (i == 2) {
+                i = -1;
             }
         }
     }

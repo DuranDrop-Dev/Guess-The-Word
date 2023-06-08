@@ -12,7 +12,7 @@ public class WrongComponent extends JComponent {
 
     public WrongComponent(int width, int height) {
         // Start-point position
-        xPos = (GUI.FRAME_WIDTH/2) - (width/2);
+        xPos = (GUI.FRAME_WIDTH / 2) - (width / 2);
         yPosWrong = 800;
 
         // Get image
@@ -27,6 +27,7 @@ public class WrongComponent extends JComponent {
         });
         timer.start();
     }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
