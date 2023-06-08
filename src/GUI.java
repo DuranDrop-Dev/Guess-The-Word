@@ -55,11 +55,13 @@ public class GUI {
             JMenu aboutMenu = new JMenu("About");
             JMenuItem layout = new JMenuItem("Layout");
             JMenuItem attribution = new JMenuItem("Media Attributions");
+            JCheckBox mute = new JCheckBox("Mute Music");
             DefaultCaret caret = (DefaultCaret) textArea.getCaret();
             caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
             // BG Music
-            SoundHandler.RunMusic("Resources/audio/music.wav", -1);
+            SoundHandler.RunBG("Resources/audio/music.wav", -1);
+            mute.setSelected(false);
 
             // Style
             Font regFont = new Font("arial", Font.BOLD, 12);
@@ -151,13 +153,16 @@ public class GUI {
             contentPanel.add(playersName, gbc);
 
             gbc.gridy = 5;
-            contentPanel.add(saveMessages, gbc);
+            contentPanel.add(mute, gbc);
 
             gbc.gridy = 6;
+            contentPanel.add(saveMessages, gbc);
+
+            gbc.gridy = 7;
             contentPanel.add(messageBox, gbc);
 
             startGame.setVisible(false);
-            gbc.gridy = 7;
+            gbc.gridy = 8;
             contentPanel.add(startGame, gbc);
 
             wrong.setVisible(false);
@@ -196,6 +201,15 @@ public class GUI {
                 startPlayingGame();
                 startGame.setVisible(false);
             });
+
+            // Mute BG Music
+            mute.addChangeListener(e ->{
+                if (mute.isSelected()) {
+                    SoundHandler.clip.stop();
+                } else {
+                    SoundHandler.clip.loop(-1);
+                }
+            });
         });
     }
 
@@ -220,7 +234,7 @@ public class GUI {
         // Create prompt
         prompt.HostFirstName(firstName, lastName, phrase);
         prompt.setBackground(white);
-        gbc.gridy = 7;
+        gbc.gridy = 8;
         contentPanel.add(prompt, gbc);
         contentPanel.revalidate();
     }
@@ -238,7 +252,7 @@ public class GUI {
         PlayerPrompt prompt = new PlayerPrompt();
         prompt.Player1FirstName(a1, a2, b1, b2, c1, c2);
         prompt.setBackground(white);
-        gbc.gridy = 7;
+        gbc.gridy = 8;
         contentPanel.add(prompt, gbc);
         contentPanel.revalidate();
     }

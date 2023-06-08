@@ -22,7 +22,7 @@ public class Turn {
                 ", please enter a letter for the game phrase! \n\n";
         GUI.gamePrompt.hostPrompt(msg);
         GUI.gamePrompt.setBackground(GUI.white);
-        GUI.gbc.gridy = 7;
+        GUI.gbc.gridy = 8;
         GUI.contentPanel.add(GUI.gamePrompt, GUI.gbc);
         GUI.contentPanel.revalidate();
         GUI.gamePrompt.wait();

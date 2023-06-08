@@ -3,3 +3,4 @@
 <li>Media added</li>
 <li>Animations added</li>
 <li>Folder restructured</li>
+<li>Added mute checkbox for background music</li>
